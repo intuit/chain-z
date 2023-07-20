@@ -189,9 +189,6 @@ If threads are getting reused it will clear the current mdc of thread before cop
 - Clone the code
 - Build by running `mvn clean install`
 
-### Build job:
-<<TBD>>
-
 ### Contributing
 Refer [contribution guidline](CONTRIBUTING.md)
 
