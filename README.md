@@ -1,4 +1,4 @@
-# Chain-z - Mastering Asynchronous Execution and paving the Way for Efficient async task orchestration.
+# Chain-z : Mastering Asynchronous Execution and paving the Way for Efficient async task orchestration.
 It privides Async Execution of code in Java based application.
 This framework in written using Rx Java.Can be extended to write in any other choice of async implementation. 
 
