@@ -85,13 +85,6 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco-maven-plugin.version}</version>
-				<configuration>
-					<dataFile>${project.testresult.directory}/coverage/jacoco/jacoco.exec</dataFile>
-					<outputDirectory>${project.testresult.directory}/coverage/jacoco
-					</outputDirectory>
-					<!-- Sets the path to the file which contains the execution data. -->
-					<destFile>${project.testresult.directory}/coverage/jacoco/jacoco.exec</destFile>
-				</configuration>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
