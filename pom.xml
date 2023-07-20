@@ -111,14 +111,10 @@
 		</plugins>
 	</build>
 
-	<distributionManagement>
-		<repository>
-			<id>scm.int.rel.repo</id>
-			<url>https://artifact.intuit.com/artifactory/SBG.QBO.Intuit-Releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>scm.dev.snap.repo</id>
-			<url>https://artifact.intuit.com/artifactory/SBG.QBO.Intuit-Snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>       
+    </distributionManagement>  
 </project>
