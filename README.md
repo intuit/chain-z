@@ -178,25 +178,13 @@ If threads are getting reused it will clear the current mdc of thread before cop
   RxJavaPlugins.setScheduleHandler(new MdcPropagatingFunction());
 ```
 
-#### TODO Features:
-```
-* Task Retries based on config
-```
 ### Local Development
 - Clone the code
 - Build by running `mvn clean install`
 
 ### Build job:
-https://build.intuit.com/qbo/job/qbo-adv-workflow/job/was-async-chain/
+<<TBD>>
 
 ### Contributing
 Refer [contribution guidline](CONTRIBUTING.md)
-
-### Support
-[FAQ's](https://github.intuit.com/pages/appintgwkflw-wkflautomate/workflow-platform-docs/#/support/faq)
-[Reach us](https://github.intuit.com/pages/appintgwkflw-wkflautomate/workflow-platform-docs/#/support/support)
-
-### Badges
-[![Code Coverage](https://codecov.tools.a.intuit.com/ghe/appintgwkflw-wkflautomate/async-execution-chain/branch/master/graph/badge.svg)](https://codecov.tools.a.intuit.com/ghe/appintgwkflw-wkflautomate/async-execution-chain)
-[![Build Status](https://build.intuit.com/qbo/buildStatus/buildIcon?job=qbo-adv-workflow/was-async-chain)](https://build.intuit.com/qbo/buildStatus/buildIcon?job=qbo-adv-workflow/was-async-chain)
 
