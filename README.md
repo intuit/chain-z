@@ -5,7 +5,7 @@
 ![coverage](.github/badges/jacoco.svg)
 ![branches coverage](.github/badges/branches.svg)
 
-** Mastering Asynchronous Execution and paving the Way for Efficient async task orchestration.
+**_Mastering Asynchronous Execution and paving the Way for Efficient async task orchestration._**
 It provides Async Execution of code in Java based application.
 This framework in written using Rx Java.Can be extended to write in any other choice of async implementation. 
 
