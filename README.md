@@ -131,7 +131,7 @@ Task can be marked as fatal and non fatal as well so in case of fatal chain will
 
 ![Sequence Flow](docs/sequence_diagram.png "Chain Sequence Flow")
 
-### Rollback (v1.0.4)
+### Rollback
 ```
 The task has a method onError, which can be used to define rollback steps for the task.
 
