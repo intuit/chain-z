@@ -1,6 +1,6 @@
 # Chain-z 
 
-[![Build Status](https://github.com/intuit/chain-z/actions/workflows/maven.yml/badge.svg)](https://github.com/intuit/chain-z/actions/workflows/maven.yml)
+[![Build Status](https://github.com/intuit/chain-z/actions/workflows/maven-build.yml/badge.svg)](https://github.com/intuit/chain-z/actions/workflows/maven-build.yml)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.intuit.apl/apl-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.intuit.apl/apl-core)
 ![coverage](.github/badges/jacoco.svg)
 ![branches coverage](.github/badges/branches.svg)
