@@ -1,5 +1,12 @@
-# async-execution
-Async Execution of code in Java based application.
+# Chain-z 
+
+[![Build Status](https://github.com/intuit/chain-z/actions/workflows/maven-build.yml/badge.svg)](https://github.com/intuit/chain-z/actions/workflows/maven-build.yml)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.intuit.apl/apl-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.intuit.apl/apl-core)
+![coverage](.github/badges/jacoco.svg)
+![branches coverage](.github/badges/branches.svg)
+
+**_Mastering Asynchronous Execution and paving the Way for Efficient async task orchestration._**
+It provides Async Execution of code in Java based application.
 This framework in written using Rx Java.Can be extended to write in any other choice of async implementation. 
 
 ## Benefits
@@ -124,7 +131,7 @@ Task can be marked as fatal and non fatal as well so in case of fatal chain will
 
 ![Sequence Flow](docs/sequence_diagram.png "Chain Sequence Flow")
 
-### Rollback (v1.0.4)
+### Rollback
 ```
 The task has a method onError, which can be used to define rollback steps for the task.
 
@@ -178,25 +185,10 @@ If threads are getting reused it will clear the current mdc of thread before cop
   RxJavaPlugins.setScheduleHandler(new MdcPropagatingFunction());
 ```
 
-#### TODO Features:
-```
-* Task Retries based on config
-```
 ### Local Development
 - Clone the code
 - Build by running `mvn clean install`
 
-### Build job:
-https://build.intuit.com/qbo/job/qbo-adv-workflow/job/was-async-chain/
-
 ### Contributing
 Refer [contribution guidline](CONTRIBUTING.md)
-
-### Support
-[FAQ's](https://github.intuit.com/pages/appintgwkflw-wkflautomate/workflow-platform-docs/#/support/faq)
-[Reach us](https://github.intuit.com/pages/appintgwkflw-wkflautomate/workflow-platform-docs/#/support/support)
-
-### Badges
-[![Code Coverage](https://codecov.tools.a.intuit.com/ghe/appintgwkflw-wkflautomate/async-execution-chain/branch/master/graph/badge.svg)](https://codecov.tools.a.intuit.com/ghe/appintgwkflw-wkflautomate/async-execution-chain)
-[![Build Status](https://build.intuit.com/qbo/buildStatus/buildIcon?job=qbo-adv-workflow/was-async-chain)](https://build.intuit.com/qbo/buildStatus/buildIcon?job=qbo-adv-workflow/was-async-chain)
 

@@ -85,13 +85,6 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco-maven-plugin.version}</version>
-				<configuration>
-					<dataFile>${project.testresult.directory}/coverage/jacoco/jacoco.exec</dataFile>
-					<outputDirectory>${project.testresult.directory}/coverage/jacoco
-					</outputDirectory>
-					<!-- Sets the path to the file which contains the execution data. -->
-					<destFile>${project.testresult.directory}/coverage/jacoco/jacoco.exec</destFile>
-				</configuration>
 				<executions>
 					<execution>
 						<id>prepare-agent</id>
@@ -111,14 +104,10 @@
 		</plugins>
 	</build>
 
-	<distributionManagement>
-		<repository>
-			<id>scm.int.rel.repo</id>
-			<url>https://artifact.intuit.com/artifactory/SBG.QBO.Intuit-Releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>scm.dev.snap.repo</id>
-			<url>https://artifact.intuit.com/artifactory/SBG.QBO.Intuit-Snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>       
+    </distributionManagement>  
 </project>
