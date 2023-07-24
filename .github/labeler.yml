@@ -1,0 +1,11 @@
+Documentation:
+- any: ['**/*.txt', '**/*.md, docs/**']
+
+Actions:
+- '.github/workflows/*'
+
+Tests:
+- all: ['src/test/**', '**/*.java']
+
+Code:
+- all: ['src/main/**', '**/*.java']
