@@ -18,7 +18,7 @@
 		<rxjava.version>2.2.16</rxjava.version>
 		<lombok.version>1.18.10</lombok.version>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<spring-boot-starter-logging.version>2.1.11.RELEASE</spring-boot-starter-logging.version>
 		<mockito-core.version>3.6.0</mockito-core.version>
