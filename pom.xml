@@ -9,6 +9,8 @@
 	<packaging>jar</packaging>
 
 	<name>async-execution</name>
+	<description>It provides Async Execution of code in Java based application.
+		This framework in written using Rx Java.Can be extended to write in any other choice of async implementation. </description>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,7 +26,32 @@
 		<mockito-core.version>3.6.0</mockito-core.version>
 		<maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
 	</properties>
-
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Nishant Sehgal</name>
+			<id>nsehgal</id>
+			<organization>Intuit, Inc.</organization>
+			<organizationUrl>http://www.intuit.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Raghav Agarwal</name>
+			<id>ragarwal7</id>
+			<organization>Intuit, Inc.</organization>
+			<organizationUrl>http://www.intuit.com</organizationUrl>
+		</developer>
+		<developer>
+			<name>Sumit Kumar</name>
+			<id>skumar103</id>
+			<organization>Intuit, Inc.</organization>
+			<organizationUrl>http://www.intuit.com</organizationUrl>
+		</developer>
+	</developers>
 	<dependencies>
 
 		<dependency>
