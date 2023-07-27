@@ -31,7 +31,7 @@ public interface ExecutionChainClient {
    * get the Execution chain
    *
    * @param inputRequest input state request for Execution chain
-   * @param tasks chain of task
+   * @param task chain of task
    * @return Execution chain
    */
   Chain getExecutionChain(State inputRequest, Task... task);

@@ -29,7 +29,7 @@ public class ChainHelper {
     return Optional.ofNullable(executionChainConfig).map(executor -> executor.getExecutor());
   }
   /**
-   * By default uses {@link Schedulers.io} else create Scheduler from the input configuration by
+   * By default uses {@link Schedulers} else create Scheduler from the input configuration by
    * client
    *
    * @param executionChainConfig input execution chain configuration
