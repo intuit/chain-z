@@ -9,7 +9,7 @@ public interface Task {
    * by default all tasks will be fatal i.e if a fatal task fails chain next to the current chain
    * will not execute.<br>
    * But if u have a mix of fatal and non fatal task in a chain for example.
-   * .next(FatalTaskA,NonFatalTaskA,FatalTaskB).chain(.,.,.) -> next chain will not execute if there
+   * .next(FatalTaskA,NonFatalTaskA,FatalTaskB).chain(.,.,.) - next chain will not execute if there
    * is any error in FatalTaskA,FatalTaskB but if there is any error in NonFatalTaskA it will not
    * stop next chain from executing.<br>
    * Note:every task in a given chain will always execute, exception in one task in a given chain
