@@ -7,7 +7,6 @@
 	<artifactId>chain-z</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-
 	<name>async-execution</name>
 	<description>It provides Async Execution of code in Java based application.
 		This framework in written using Rx Java.Can be extended to write in any other choice of async implementation. </description>
