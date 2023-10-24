@@ -33,7 +33,7 @@ jobs:
     - name: Update dependency graph
       uses: advanced-security/maven-dependency-submission-action@v3
       with:
-        repo-token: ${{ secrets.CHAIN_ACCESS_TOKEN }}      
+        token: ${{ secrets.CHAIN_ACCESS_TOKEN }}      
       
     - name: Generate JaCoCo Badge
       id: jacoco
