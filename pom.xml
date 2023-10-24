@@ -104,12 +104,11 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
-<!--                                         <forkCount>10</forkCount>
+                                        <forkCount>10</forkCount>
                                         <reuseForks>false</reuseForks>
-                                        <trimStackTrace>false</trimStackTrace>
-                                        <skipTests>false</skipTests>					 -->
-					<useSystemClassLoader>true</useSystemClassLoader>
-					<useManifestOnlyJar>false</useManifestOnlyJar>
+                                        <trimStackTrace>false</trimStackTrace>			
+<!-- 					<useSystemClassLoader>true</useSystemClassLoader>
+					<useManifestOnlyJar>false</useManifestOnlyJar> -->
 				</configuration>
 			</plugin>
 			<plugin>
