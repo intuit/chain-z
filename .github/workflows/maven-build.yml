@@ -14,6 +14,9 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+  contents: write
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,9 +34,7 @@ jobs:
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
-      uses: advanced-security/maven-dependency-submission-action@v3
-      with:
-        token: ${{ secrets.CHAIN_ACCESS_TOKEN }}      
+      uses: advanced-security/maven-dependency-submission-action@v3  
       
     - name: Generate JaCoCo Badge
       id: jacoco
