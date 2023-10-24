@@ -14,11 +14,11 @@ on:
   pull_request:
     branches: [ "master" ]
 
-permissions:
-  contents: write
   
 jobs:
   build:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
