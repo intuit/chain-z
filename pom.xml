@@ -107,8 +107,6 @@
                                         <forkCount>10</forkCount>
                                         <reuseForks>false</reuseForks>
                                         <trimStackTrace>false</trimStackTrace>			
-<!-- 					<useSystemClassLoader>true</useSystemClassLoader>
-					<useManifestOnlyJar>false</useManifestOnlyJar> -->
 				</configuration>
 			</plugin>
 			<plugin>
