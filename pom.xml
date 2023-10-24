@@ -109,6 +109,7 @@
                                         <trimStackTrace>false</trimStackTrace>
                                         <skipTests>false</skipTests>					 -->
 					<useSystemClassLoader>true</useSystemClassLoader>
+					<useManifestOnlyJar>false</useManifestOnlyJar>
 				</configuration>
 			</plugin>
 			<plugin>
