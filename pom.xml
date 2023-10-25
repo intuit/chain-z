@@ -5,7 +5,7 @@
 
 	<groupId>com.intuit.async</groupId>
 	<artifactId>chain-z</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
 	<name>async-execution</name>
 	<description>It provides Async Execution of code in Java based application.
