@@ -15,7 +15,7 @@ jobs:
       - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
-          java-version: 8
+          java-version: 11
           distribution: 'adopt'
 
       - name: Build with Maven
@@ -24,7 +24,7 @@ jobs:
       - name: Set up Apache Maven Central
         uses: actions/setup-java@v2
         with: # running setup-java again overwrites the settings.xml
-          java-version: 8
+          java-version: 11
           distribution: 'adopt'
           server-id: ossrh
           server-username: OSSRH_USERNAME
