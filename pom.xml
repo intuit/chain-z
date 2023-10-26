@@ -18,7 +18,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<rxjava.version>2.2.16</rxjava.version>
-		<lombok.version>1.18.10</lombok.version>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 		<junit.version>4.12</junit.version>
 		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -58,19 +57,6 @@
 			<groupId>io.reactivex.rxjava2</groupId>
 			<artifactId>rxjava</artifactId>
 			<version>${rxjava.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
-			<version>${spring-boot-starter-logging.version}</version>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
