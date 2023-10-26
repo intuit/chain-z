@@ -2,7 +2,12 @@ package com.intuit.async.execution;
 
 import com.intuit.async.execution.request.State;
 
+import com.intuit.async.execution.util.PredicateEvaluator;
 import io.reactivex.Observable;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
+
 
 /** @author Nishant-Sehgal */
 public interface Chain {
@@ -23,6 +28,12 @@ public interface Chain {
    * @return current {@link Chain} reference
    */
   Chain next(Task... tasks);
+  /**
+   * @param taskPredicate list of task with respective predicates
+   * @param <T>
+   * @return current {@link Chain} reference
+   */
+  <T> Chain next(List<Pair<Task, PredicateEvaluator<T>>> taskPredicate);
 
   /**
    * Depends on the caller to handle async or sync and can add call backs as well.
