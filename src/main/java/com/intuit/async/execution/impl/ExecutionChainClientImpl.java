@@ -7,16 +7,10 @@ import com.intuit.async.execution.ExecutionChainClient;
 import com.intuit.async.execution.Task;
 import com.intuit.async.execution.config.ExecutionChainConfiguration;
 import com.intuit.async.execution.request.State;
-
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 /** @author Nishant-Sehgal */
-@RequiredArgsConstructor
-@Getter
 public class ExecutionChainClientImpl implements ExecutionChainClient {
 
   private final ExecutionChainConfiguration executionChainConfig;
@@ -35,5 +29,13 @@ public class ExecutionChainClientImpl implements ExecutionChainClient {
   public void clean() {
     Optional<ExecutorService> executorOpt = getExecutor(executionChainConfig);
     executorOpt.ifPresent(ExecutorService::shutdown);
+  }
+
+  public ExecutionChainConfiguration getExecutionChainConfig() {
+    return executionChainConfig;
+  }
+
+  public ExecutionChainClientImpl(ExecutionChainConfiguration executionChainConfig) {
+    this.executionChainConfig = executionChainConfig;
   }
 }

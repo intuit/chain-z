@@ -7,38 +7,42 @@ import com.intuit.async.execution.request.State;
 import java.util.List;
 import java.util.Map;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/** @author Nishant-Sehgal */
-@Slf4j
+/**
+ * @author Nishant-Sehgal
+ */
 public class DummyTaskWithNonFatalExceptionTest implements Task {
 
-  private String key;
+    private static final Logger log = LoggerFactory.getLogger("DummyTaskWithNonFatalExceptionTest");
 
-  public DummyTaskWithNonFatalExceptionTest(String key) {
-    this.key = key;
-  }
+    private String key;
 
-  @Override
-  public boolean isFatal() {
-    return false;
-  }
-
-  @Override
-  public State execute(State inputRequest) {
-    Map<String, List<Integer>> req = inputRequest.getValue(ChainConstantTest.DUMMYTASKREQ);
-    if ("A".equals(key) || "C".equals(key)) {
-      int val = 1 / 0;
-      log.debug(String.valueOf(val));
+    public DummyTaskWithNonFatalExceptionTest(String key) {
+        this.key = key;
     }
 
-    log.info(
-        "Executed Task for request :: "
-            + req.get(key)
-            + " Thread "
-            + Thread.currentThread().getName());
-    State state = new State();
-    state.addValue("RESPONSE" + "-" + key, "DONE" + "-" + key);
-    return state;
-  }
+    @Override
+    public boolean isFatal() {
+        return false;
+    }
+
+    @Override
+    public State execute(State inputRequest) {
+        Map<String, List<Integer>> req = inputRequest.getValue(ChainConstantTest.DUMMYTASKREQ);
+        if ("A".equals(key) || "C".equals(key)) {
+            int val = 1 / 0;
+            log.debug(String.valueOf(val));
+        }
+
+        log.info(
+                "Executed Task for request :: "
+                        + req.get(key)
+                        + " Thread "
+                        + Thread.currentThread().getName());
+        State state = new State();
+        state.addValue("RESPONSE" + "-" + key, "DONE" + "-" + key);
+        return state;
+    }
 }

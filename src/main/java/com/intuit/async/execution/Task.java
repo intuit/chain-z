@@ -38,7 +38,7 @@ public interface Task {
    * @param inputRequest {@link State} input state request
    * @return the final state after the current executing task
    */
-  default State onError(State inputRequest) {
+  default State onError(State inputRequest) throws Exception {
     return inputRequest;
   }
 }

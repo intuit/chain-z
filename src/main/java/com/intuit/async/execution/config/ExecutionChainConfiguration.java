@@ -5,14 +5,11 @@ import com.intuit.async.execution.impl.ExecutionChainClientImpl;
 
 import java.util.concurrent.ExecutorService;
 
-import lombok.Getter;
-
 /**
  * @author Nishant-Sehgal
  *     <p>Configuration for execution chain.Can configure log time of tasks and custom thread pool
  *     executor.
  */
-@Getter
 public class ExecutionChainConfiguration {
 
   private ExecutorService executor;
@@ -45,5 +42,13 @@ public class ExecutionChainConfiguration {
     public ExecutionChainClient build() {
       return new ExecutionChainClientImpl(new ExecutionChainConfiguration(this));
     }
+  }
+
+  public ExecutorService getExecutor() {
+    return executor;
+  }
+
+  public boolean isLogTime() {
+    return logTime;
   }
 }

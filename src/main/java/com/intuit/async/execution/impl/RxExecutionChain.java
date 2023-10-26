@@ -22,16 +22,17 @@ import com.intuit.async.execution.request.State;
 import com.intuit.async.execution.util.RxExecutionChainAction;
 
 import io.reactivex.Observable;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * It helps in executing async tasks.It also provides chaining in tasks that too in async manner.
  *
  * @author Nishant-Sehgal
  */
-@Slf4j
 public class RxExecutionChain implements Chain {
 
+  private static final Logger log = LoggerFactory.getLogger("RxExecutionChain");
   private State chainState;
 
   /** linked hash map to maintain order of tasks in chain */

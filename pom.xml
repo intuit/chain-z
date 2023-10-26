@@ -5,17 +5,18 @@
 
 	<groupId>com.intuit.async</groupId>
 	<artifactId>chain-z</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
+
 	<name>async-execution</name>
 	<description>It provides Async Execution of code in Java based application.
 		This framework in written using Rx Java.Can be extended to write in any other choice of async implementation. </description>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>11</java.version>
-		<maven.compiler.target>11</maven.compiler.target>
-		<maven.compiler.source>11</maven.compiler.source>
+		<java.version>1.8</java.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
 		<rxjava.version>2.2.16</rxjava.version>
 		<jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
 		<junit.version>4.12</junit.version>
@@ -59,6 +60,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+			<version>${spring-boot-starter-logging.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
@@ -81,8 +89,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -90,9 +98,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
-                                        <forkCount>10</forkCount>
-                                        <reuseForks>false</reuseForks>
-                                        <trimStackTrace>false</trimStackTrace>			
+					<useSystemClassLoader>false</useSystemClassLoader>
 				</configuration>
 			</plugin>
 			<plugin>

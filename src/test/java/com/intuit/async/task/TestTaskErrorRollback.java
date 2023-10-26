@@ -2,8 +2,6 @@ package com.intuit.async.task;
 
 import com.intuit.async.execution.request.State;
 
-import lombok.SneakyThrows;
-
 /** @author ragarwal7 */
 public class TestTaskErrorRollback extends TestTask {
 
@@ -11,9 +9,8 @@ public class TestTaskErrorRollback extends TestTask {
     super(requestKey, responseKey, response);
   }
 
-  @SneakyThrows
   @Override
-  public State onError(State inputRequest) {
+  public State onError(State inputRequest) throws Exception {
     throw new Exception("Error during rollback");
   }
 }

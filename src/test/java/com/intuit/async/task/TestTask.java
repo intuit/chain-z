@@ -3,14 +3,16 @@ package com.intuit.async.task;
 import com.intuit.async.execution.Task;
 import com.intuit.async.execution.request.State;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /** @author Nishant-Sehgal */
-@Slf4j
 public class TestTask implements Task {
+
+  private static final Logger log = LoggerFactory.getLogger("TestTask");
 
   private String requestKey;
   private String responseKey;
@@ -47,7 +49,7 @@ public class TestTask implements Task {
   }
 
   @Override
-  public State onError(State inputRequest) {
+  public State onError(State inputRequest) throws Exception {
     inputRequest.addValue(requestKey + "-ERROR", "Rollback");
     List<String> rollbackSequence = inputRequest.getValue("rollbackSequence");
     if (rollbackSequence == null) {
