@@ -193,6 +193,6 @@ If threads are getting reused it will clear the current mdc of thread before cop
 Refer [contribution guidline](CONTRIBUTING.md)
 
 ### Blogs
-- [Chain-z: Mastering Asynchronous Execution with RxJava, A Game-Changer for Java-Based Applications](https://medium.com/@manishmishra039/chain-z-mastering-asynchronous-execution-with-rxjava-a-game-changer-for-java-based-applications-3e25cbe57ef8): This blog discusses the benefits & example usage of Chain-z, a powerful library on RxJava for efficiently orchestrating asynchronous tasks. It simplifies the process by handling boilerplate code, enabling developers to focus on business logic and executing code asynchronously as needed. 
+- [Chain-z: Mastering Asynchronous Execution with RxJava, A Game-Changer for Java-Based Applications](https://medium.com/@manishmishra039/chain-z-mastering-asynchronous-execution-with-rxjava-a-game-changer-for-java-based-applications-3e25cbe57ef8): This blog discusses the benefits & example usage of Chain-z, a powerful library built on RxJava for efficiently orchestrating asynchronous tasks. It simplifies the process by handling boilerplate code, enabling developers to focus on business logic and executing code asynchronously as needed. 
 
 
