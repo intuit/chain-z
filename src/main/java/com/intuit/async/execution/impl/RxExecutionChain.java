@@ -7,6 +7,7 @@ import static java.util.Objects.isNull;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class RxExecutionChain implements Chain {
     populateTasks(tasks);
   }
 
-  public <T> RxExecutionChain(State inputReq, final List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePair) {
+  public <T> RxExecutionChain(State inputReq, final Pair<Task, Pair<Predicate<T>, T>>... taskPredicatePair) {
     this.chainState = inputReq;
     populateTasks(taskPredicatePair);
   }
@@ -77,7 +78,7 @@ public class RxExecutionChain implements Chain {
     return this;
   }
 
-  public <T> RxExecutionChain next(List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePair) {
+  public <T> RxExecutionChain next(final Pair<Task, Pair<Predicate<T>, T>>... taskPredicatePair) {
     populateTasks(taskPredicatePair);
     return this;
   }
@@ -169,17 +170,20 @@ public class RxExecutionChain implements Chain {
   /**
    * Based on supplied predicate, evaluates the condition and add to the task list
    *
-   * @param taskPredicatePairList: List of A Pair of Tasks and Supplied Predicates
+   * @param taskPredicatePairs: List of A Pair of Tasks and Supplied Predicates
    * @param <T>                    : Type Parameter of Passed Predicate
    */
-  private <T> void populateTasks(final List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePairList) {
+  private <T> void populateTasks(final Pair<Task, Pair<Predicate<T>, T>>... taskPredicatePairs) {
     // if predicate resolves to true then add to chain
-    if (isNull(taskPredicatePairList) && taskPredicatePairList.size() == 0) {
+    if (isNull(taskPredicatePairs) && taskPredicatePairs.length == 0) {
       return;
     }
+
+    List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePairsList = Arrays.asList(taskPredicatePairs);
+
     // Tasks which are evaluating to True gets filtered and supplied to populateTasks Method
     final Task[] tasks =
-            taskPredicatePairList.stream()
+            taskPredicatePairsList.stream()
                     .map(pair -> pair.getValue().getKey().test(pair.getValue().getValue()) ? pair.getKey() : null)
                     .filter(Objects::nonNull)
                     .toArray(Task[]::new);

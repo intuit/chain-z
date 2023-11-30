@@ -33,7 +33,7 @@ public interface Chain {
    * @param <T>
    * @return current {@link Chain} reference
    */
-  <T> Chain next(List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicate);
+  <T> Chain next(final Pair<Task, Pair<Predicate<T>, T>>... taskPredicate);
 
   /**
    * Depends on the caller to handle async or sync and can add call backs as well.

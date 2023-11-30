@@ -464,13 +464,10 @@ public class RxExecutionChainTest {
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
     final Predicate<List> predicate = s -> value.size() > 0;
 
-    final List<Pair<Task, Pair<Predicate<List>, List>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
-
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -496,14 +493,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<List> predicate = s -> value.size() > 0;
-    final List<Pair<Task, Pair<Predicate<List>, List>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -529,14 +523,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<List> predicate = s -> value.size() > 10;
-    final List<Pair<Task, Pair<Predicate<List>, List>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -562,14 +553,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<List> predicate = s -> value.size() > 10;
-    final List<Pair<Task, Pair<Predicate<List>, List>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -594,14 +582,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<String> predicate = s -> value.length() > 5;
-    final List<Pair<Task, Pair<Predicate<String>, String>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -626,16 +611,12 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<String> predicate = s -> value.length() > 5;
     final Predicate<String> predicate2 = s -> value.contains("test");
-    final List<Pair<Task, Pair<Predicate<String>, String>>> values = new ArrayList<>();
-    values.add(Pair.of(task, Pair.of(predicate, value)));
-    values.add(Pair.of(task1, Pair.of(predicate2, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task, Pair.of(predicate, value)),Pair.of(task1, Pair.of(predicate2, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -657,18 +638,14 @@ public class RxExecutionChainTest {
     state.addValue("A", 1);
     state.addValue("B", 2);
     Integer value = 10; // Evaluating Size Predicate
-    System.out.println(value);
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Integer> predicate = s -> value > 5;
-    final List<Pair<Task, Pair<Predicate<Integer>, Integer>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -693,14 +670,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Long> predicate = s -> value > 5;
-    final List<Pair<Task, Pair<Predicate<Long>, Long>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -725,14 +699,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Long> predicate = s -> value > 5;
-    final List<Pair<Task, Pair<Predicate<Long>, Long>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -757,14 +728,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Boolean> predicate = s -> s.equals(true);
-    final List<Pair<Task, Pair<Predicate<Boolean>, Boolean>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -789,14 +757,11 @@ public class RxExecutionChainTest {
 
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Boolean> predicate = s -> s.equals(true);
-    final List<Pair<Task, Pair<Predicate<Boolean>, Boolean>>> values = new ArrayList<>();
-    values.add(Pair.of(task1, Pair.of(predicate, value)));
 
     try {
       state = new RxExecutionChain(state, task)
-              .next(values)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
               .execute();
     } catch (Exception e) {
     }
@@ -816,16 +781,12 @@ public class RxExecutionChainTest {
     state.addValue("A", 1);
     state.addValue("B", 2);
     boolean value = true; // Evaluating Boolean Predicate
-
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Boolean> predicate = s -> s.equals(true);
-    final List<Pair<Task, Pair<Predicate<Boolean>, Boolean>>> values = new ArrayList<>();
-    values.add(Pair.of(task, Pair.of(predicate, value)));
 
     try {
-      state = new RxExecutionChain(state, values)
+      state = new RxExecutionChain(state, Pair.of(task, Pair.of(predicate, value)))
               .next(task1)
               .execute();
     } catch (Exception e) {
@@ -847,16 +808,12 @@ public class RxExecutionChainTest {
     state.addValue("A", 1);
     state.addValue("B", 2);
     boolean value = true; // Evaluating Boolean Predicate
-
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Boolean> predicate = s -> s.equals(true);
-    final List<Pair<Task, Pair<Predicate<Boolean>, Boolean>>> values = new ArrayList<>();
-    values.add(Pair.of(task, Pair.of(predicate, value)));
 
     try {
-      state = new RxExecutionChain(state, values)
+      state = new RxExecutionChain(state, Pair.of(task, Pair.of(predicate, value)))
               .next(task1)
               .executeWithRollBack();
     } catch (Exception e) {
@@ -878,16 +835,12 @@ public class RxExecutionChainTest {
     state.addValue("A", 1);
     state.addValue("B", 2);
     boolean value = false; // Evaluating Boolean Predicate
-
     final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Boolean> predicate = s -> s.equals(true);
-    final List<Pair<Task, Pair<Predicate<Boolean>, Boolean>>> values = new ArrayList<>();
-    values.add(Pair.of(task, Pair.of(predicate, value)));
 
     try {
-      state = new RxExecutionChain(state, values)
+      state = new RxExecutionChain(state, Pair.of(task, Pair.of(predicate, value)))
               .next(task1)
               .execute();
     } catch (Exception e) {
@@ -908,16 +861,12 @@ public class RxExecutionChainTest {
     state.addValue("A", 1);
     state.addValue("B", 2);
     boolean value = false; // Evaluating Boolean Predicate
-
     TestTask taskA = new TestTask("A", "A-RESPONSE", "DONE-A");
     TestTask taskB = new TestTask("B", "B-RESPONSE", "DONE-B");
-
     final Predicate<Boolean> predicate = s -> s.equals(true);
-    List<Pair<Task, Pair<Predicate<Boolean>, Boolean>>> values = new ArrayList<>();
-    values.add(Pair.of(taskA, Pair.of(predicate, value)));
 
     try {
-      state = new RxExecutionChain(state, values)
+      state = new RxExecutionChain(state, Pair.of(taskA, Pair.of(predicate, value)))
               .next(taskB)
               .execute();
     } catch (Exception e) {
