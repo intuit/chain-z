@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -20,7 +21,6 @@ import com.intuit.async.execution.Chain;
 import com.intuit.async.execution.Task;
 import com.intuit.async.execution.config.ExecutionChainConfiguration;
 import com.intuit.async.execution.request.State;
-import com.intuit.async.execution.util.PredicateEvaluator;
 import com.intuit.async.execution.util.RxExecutionChainAction;
 
 
@@ -51,7 +51,7 @@ public class RxExecutionChain implements Chain {
     populateTasks(tasks);
   }
 
-  public <T> RxExecutionChain(State inputReq, final List<Pair<Task, PredicateEvaluator<T>>> taskPredicatePair) {
+  public <T> RxExecutionChain(State inputReq, final List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePair) {
     this.chainState = inputReq;
     populateTasks(taskPredicatePair);
   }
@@ -77,7 +77,7 @@ public class RxExecutionChain implements Chain {
     return this;
   }
 
-  public <T> RxExecutionChain next(List<Pair<Task, PredicateEvaluator<T>>> taskPredicatePair) {
+  public <T> RxExecutionChain next(List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePair) {
     populateTasks(taskPredicatePair);
     return this;
   }
@@ -172,7 +172,7 @@ public class RxExecutionChain implements Chain {
    * @param taskPredicatePairList: List of A Pair of Tasks and Supplied Predicates
    * @param <T>                    : Type Parameter of Passed Predicate
    */
-  private <T> void populateTasks(final List<Pair<Task, PredicateEvaluator<T>>> taskPredicatePairList) {
+  private <T> void populateTasks(final List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePairList) {
     // if predicate resolves to true then add to chain
     if (isNull(taskPredicatePairList) && taskPredicatePairList.size() == 0) {
       return;
@@ -180,7 +180,7 @@ public class RxExecutionChain implements Chain {
     // Tasks which are evaluating to True gets filtered and supplied to populateTasks Method
     final Task[] tasks =
             taskPredicatePairList.stream()
-                    .map(pair -> pair.getValue().evaluate(pair.getValue().getVariable()) ? pair.getKey() : null)
+                    .map(pair -> pair.getValue().getKey().test(pair.getValue().getValue()) ? pair.getKey() : null)
                     .filter(Objects::nonNull)
                     .toArray(Task[]::new);
     populateTasks(tasks);
