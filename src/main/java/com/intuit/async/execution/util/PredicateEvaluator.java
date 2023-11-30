@@ -9,28 +9,27 @@ import java.util.function.Predicate;
  * Generic PredicateEvaluator class
  */
 public class PredicateEvaluator<T> {
-    private Predicate<T> predicate;
-    // List Types would not be supported and hence used it is as of type Object
-    private Object variable;
+    private final Predicate<T> predicate;
+    private final T variable;
 
-    public PredicateEvaluator(Predicate<T> predicate, Object variable) {
+    public PredicateEvaluator(Predicate<T> predicate, T variable) {
         this.predicate = predicate;
         this.variable = variable;
     }
 
-    /**
-     * @param variable
-     * @return Returns true if predicate matches the value
-     */
-    public boolean evaluate(Object variable) {
-        return predicate.test((T) variable) ? Boolean.TRUE.booleanValue() : Boolean.FALSE.booleanValue();
+    public PredicateEvaluator(Predicate<T> predicate) {
+        this(predicate, null);
+    }
+
+    public boolean evaluate(T value) {
+        return predicate.test(value);
     }
 
     public Predicate<T> getPredicate() {
         return predicate;
     }
 
-    public Object getVariable() {
+    public T getVariable() {
         return variable;
     }
 }

@@ -485,6 +485,39 @@ public class RxExecutionChainTest {
   }
 
   @Test
+  public void testWithListPredicateWithOnlyPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    List<String> value = new ArrayList<>();
+    value.add("test String"); // Evaluating Size Predicate
+
+    TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    PredicateEvaluator<List> predicateEvaluator = new PredicateEvaluator<>((s -> value.size() > 0));
+
+    List<Pair<Task, PredicateEvaluator<List>>> values = new ArrayList<>();
+    values.add(Pair.of(task1, predicateEvaluator));
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(values)
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
   public void testWithListPredicateFalse() {
     State state = new State();
     state.addValue("A", 1);
@@ -495,6 +528,39 @@ public class RxExecutionChainTest {
     TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
     TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
     PredicateEvaluator<List> predicateEvaluator = new PredicateEvaluator<>((s -> value.size() > 10), value);
+
+    List<Pair<Task, PredicateEvaluator<List>>> values = new ArrayList<>();
+    values.add(Pair.of(task1, predicateEvaluator));
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(values)
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertNull(state.getValue("B-RESPONSE")); // Predicate didn't match
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithListPredicateFalseWithOnlyPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    List<String> value = new ArrayList<>();
+    value.add("test String"); // Evaluating Size Predicate
+
+    TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    PredicateEvaluator<List> predicateEvaluator = new PredicateEvaluator<>((s -> value.size() > 10));
 
     List<Pair<Task, PredicateEvaluator<List>>> values = new ArrayList<>();
     values.add(Pair.of(task1, predicateEvaluator));
