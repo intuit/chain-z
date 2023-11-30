@@ -179,14 +179,14 @@ public class RxExecutionChain implements Chain {
       return;
     }
 
-    List<Pair<Task, Pair<Predicate<T>, T>>> taskPredicatePairsList = Arrays.asList(taskPredicatePairs);
-
     // Tasks which are evaluating to True gets filtered and supplied to populateTasks Method
     final Task[] tasks =
-            taskPredicatePairsList.stream()
+            Arrays.asList(taskPredicatePairs).stream()
                     .map(pair -> pair.getValue().getKey().test(pair.getValue().getValue()) ? pair.getKey() : null)
                     .filter(Objects::nonNull)
                     .toArray(Task[]::new);
+
+    // Calling populate tasks
     populateTasks(tasks);
   }
 
