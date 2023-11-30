@@ -3,6 +3,11 @@ package com.intuit.async.execution;
 import com.intuit.async.execution.request.State;
 
 import io.reactivex.Observable;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.List;
+import java.util.function.Predicate;
+
 
 /** @author Nishant-Sehgal */
 public interface Chain {
@@ -23,6 +28,12 @@ public interface Chain {
    * @return current {@link Chain} reference
    */
   Chain next(Task... tasks);
+  /**
+   * @param taskPredicate list of task with respective predicates
+   * @param <T>
+   * @return current {@link Chain} reference
+   */
+  <T> Chain next(final Pair<Task, Pair<Predicate<T>, T>>... taskPredicate);
 
   /**
    * Depends on the caller to handle async or sync and can add call backs as well.

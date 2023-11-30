@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import io.reactivex.observers.TestObserver;
 import org.junit.Assert;
@@ -448,4 +451,434 @@ public class RxExecutionChainTest {
     Assert.assertNull(state.getExceptionTaskIndex());
     Assert.assertNull(state.getError());
   }
+
+  @Test
+  public void testWithListPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    List<String> value = new ArrayList<>();
+    value.add("test String"); // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<List> predicate = s -> value.size() > 0;
+
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithListPredicateWithOnlyPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    final List<String> value = new ArrayList<>();
+    value.add("test String"); // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<List> predicate = s -> value.size() > 0;
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithListPredicateFalse() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    final List<String> value = new ArrayList<>();
+    value.add("test String"); // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<List> predicate = s -> value.size() > 10;
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertNull(state.getValue("B-RESPONSE")); // Predicate didn't match
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithListPredicateFalseWithOnlyPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    final List<String> value = new ArrayList<>();
+    value.add("test String"); // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<List> predicate = s -> value.size() > 10;
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertNull(state.getValue("B-RESPONSE")); // Predicate didn't match
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithStringSizePredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    final String value = "test String"; // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<String> predicate = s -> value.length() > 5;
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithStringSizePredicateMultipleAllPassing() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    String value = "test String"; // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<String> predicate = s -> value.length() > 5;
+    final Predicate<String> predicate2 = s -> value.contains("test");
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task, Pair.of(predicate, value)),Pair.of(task1, Pair.of(predicate2, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithIntegerPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    Integer value = 10; // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Integer> predicate = s -> value > 5;
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test
+  public void testWithLongPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    Long value = 10L; // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Long> predicate = s -> value > 5;
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test // Failure Case
+  public void testWithLongPredicateFailure() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    Long value = 2L; // Evaluating Size Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Long> predicate = s -> value > 5;
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertNull(state.getValue("B-RESPONSE")); // Predicate didn't match
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test // Success Case
+  public void testWithBooleanPredicate() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    boolean value = true; // Evaluating Boolean Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Boolean> predicate = s -> s.equals(true);
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test // Failure case
+  public void testWithBooleanPredicateFalse() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    boolean value = false; // Evaluating Boolean Predicate
+
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Boolean> predicate = s -> s.equals(true);
+
+    try {
+      state = new RxExecutionChain(state, task)
+              .next(Pair.of(task1, Pair.of(predicate, value)))
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertNull(state.getValue("B-RESPONSE")); // Predicate didn't match
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test // Success case using RxExecutionChain constructor
+  public void testWithBooleanPredicateTrueRxExecutionConstructor() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    boolean value = true; // Evaluating Boolean Predicate
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Boolean> predicate = s -> s.equals(true);
+
+    try {
+      state = new RxExecutionChain(state, Pair.of(task, Pair.of(predicate, value)))
+              .next(task1)
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test // Success case using RxExecutionChain constructor
+  public void testWithBooleanPredicateTrueRxExecutionConstructorWithRollback() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    boolean value = true; // Evaluating Boolean Predicate
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Boolean> predicate = s -> s.equals(true);
+
+    try {
+      state = new RxExecutionChain(state, Pair.of(task, Pair.of(predicate, value)))
+              .next(task1)
+              .executeWithRollBack();
+    } catch (Exception e) {
+    }
+
+    Assert.assertEquals("DONE-A", state.getValue("A-RESPONSE"));
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test // Failure case using RxExecutionChain constructor
+  public void testWithBooleanPredicateFalseRxExecutionConstructor() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    boolean value = false; // Evaluating Boolean Predicate
+    final TestTask task = new TestTask("A", "A-RESPONSE", "DONE-A");
+    final TestTask task1 = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Boolean> predicate = s -> s.equals(true);
+
+    try {
+      state = new RxExecutionChain(state, Pair.of(task, Pair.of(predicate, value)))
+              .next(task1)
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertNull(state.getValue("A-RESPONSE")); // Predicate didn't match
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
+  @Test // Failure case using RxExecutionChain constructor
+  public void testWithBooleanPredicateFalseRxExecutionConstructorNullVariable() {
+    State state = new State();
+    state.addValue("A", 1);
+    state.addValue("B", 2);
+    boolean value = false; // Evaluating Boolean Predicate
+    TestTask taskA = new TestTask("A", "A-RESPONSE", "DONE-A");
+    TestTask taskB = new TestTask("B", "B-RESPONSE", "DONE-B");
+    final Predicate<Boolean> predicate = s -> s.equals(true);
+
+    try {
+      state = new RxExecutionChain(state, Pair.of(taskA, Pair.of(predicate, value)))
+              .next(taskB)
+              .execute();
+    } catch (Exception e) {
+    }
+
+    Assert.assertNull(state.getValue("A-RESPONSE")); // Predicate didn't match
+    Assert.assertEquals("DONE-B", state.getValue("B-RESPONSE"));
+    Assert.assertNull(state.getValue("A-ERROR"));
+    Assert.assertNull(state.getValue("B-ERROR"));
+    Assert.assertNull(state.getValue("C-ERROR"));
+    Assert.assertNull(state.getExceptionTaskIndex());
+    Assert.assertNull(state.getError());
+  }
+
 }

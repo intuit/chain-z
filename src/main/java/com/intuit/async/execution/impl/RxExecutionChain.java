@@ -7,11 +7,14 @@ import static java.util.Objects.isNull;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -21,6 +24,8 @@ import com.intuit.async.execution.config.ExecutionChainConfiguration;
 import com.intuit.async.execution.request.State;
 import com.intuit.async.execution.util.RxExecutionChainAction;
 
+
+import org.apache.commons.lang3.tuple.Pair;
 import io.reactivex.Observable;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +52,11 @@ public class RxExecutionChain implements Chain {
     populateTasks(tasks);
   }
 
+  public <T> RxExecutionChain(State inputReq, final Pair<Task, Pair<Predicate<T>, T>>... taskPredicatePair) {
+    this.chainState = inputReq;
+    populateTasks(taskPredicatePair);
+  }
+
   public RxExecutionChain(State inputReq) {
     this.chainState = inputReq;
   }
@@ -65,6 +75,11 @@ public class RxExecutionChain implements Chain {
 
   public RxExecutionChain next(Task... tasks) {
     populateTasks(tasks);
+    return this;
+  }
+
+  public <T> RxExecutionChain next(final Pair<Task, Pair<Predicate<T>, T>>... taskPredicatePair) {
+    populateTasks(taskPredicatePair);
     return this;
   }
 
@@ -150,6 +165,29 @@ public class RxExecutionChain implements Chain {
     // populates chain in the map
     inputObv.put(key, mergedTaskObv);
     rollbackObv.put(key, mergedRollbackObv);
+  }
+
+  /**
+   * Based on supplied predicate, evaluates the condition and add to the task list
+   *
+   * @param taskPredicatePairs: List of A Pair of Tasks and Supplied Predicates
+   * @param <T>                    : Type Parameter of Passed Predicate
+   */
+  private <T> void populateTasks(final Pair<Task, Pair<Predicate<T>, T>>... taskPredicatePairs) {
+    // if predicate resolves to true then add to chain
+    if (isNull(taskPredicatePairs) && taskPredicatePairs.length == 0) {
+      return;
+    }
+
+    // Tasks which are evaluating to True gets filtered and supplied to populateTasks Method
+    final Task[] tasks =
+            Arrays.asList(taskPredicatePairs).stream()
+                    .map(pair -> pair.getValue().getKey().test(pair.getValue().getValue()) ? pair.getKey() : null)
+                    .filter(Objects::nonNull)
+                    .toArray(Task[]::new);
+
+    // Calling populate tasks
+    populateTasks(tasks);
   }
 
   /**
